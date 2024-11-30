@@ -28,11 +28,19 @@ def main():
         screen.fill("black")
         for updatable in groupUpdatable:
             updatable.update(dt)
+        # collision check between astroids and player
         for asteroid in groupAsteroid:
             collided = asteroid.isCollided(player)
             if(collided):
                 print("Game over!")
                 return
+        # collision check between astroids and bullets
+        for asteroid in groupAsteroid:
+            for shot in groupShot:
+                collided = asteroid.isCollided(shot)
+                if(collided):
+                    asteroid.kill()
+                    shot.kill()
         for drawable in groupDrawable:
             drawable.draw(screen)
         pygame.display.flip()
